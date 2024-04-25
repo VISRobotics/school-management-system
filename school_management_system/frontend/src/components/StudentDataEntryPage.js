@@ -48,13 +48,18 @@ export default class StudentDataEntryPage extends Component {
             governmentid: this.state.governmentid,
             standard: this.state.standard
         };
-        console.log(newStudent);
+    
         axios.post('/api/students/', newStudent)
             .then(() => {
+                alert('New Student added successfully!');
                 this.fetchStudents();  // Reload the list after adding
             })
-            .catch(error => console.error('Error adding student:', error));
+            .catch(error => {
+                console.error('Error adding student:', error);
+                alert('Failed to add student!');
+            });
     };
+    
 
     render() {
         return (

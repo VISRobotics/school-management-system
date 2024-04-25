@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Container, CardMedia, Menu, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
@@ -13,6 +13,23 @@ import DepartmentDataEntryPage from "./DepartmentDataEntryPage";
 
 // Import the image
 import schoolImage from './images/SchoolManagementSystem.png'; // Adjust this path according to your project structure
+// Import LoginPage component as well
+import LoginPage from './LoginPage';
+import { Button } from '@mui/material';
+// ... other imports
+
+
+// Functional component for the login button to use the hook
+function LoginButton() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/login"); // Your login route
+  };
+
+  return (
+    <Button color="inherit" onClick={handleLogin}>Login/Signup</Button>
+  );
+}
 
 export default class HomePage extends Component {
     state = {
@@ -46,9 +63,10 @@ export default class HomePage extends Component {
                     <CssBaseline />
                     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                         <Toolbar>
-                            <Typography variant="h6" noWrap component="div" sx={{ textAlign: 'center' }}>
-                                School Management System Admin
+                            <Typography variant="h6" noWrap component="div" sx={{ textAlign: 'center', flexGrow: 1 }}>
+                                School Management System 
                             </Typography>
+                            <LoginButton /> {/* This is the new login button */}
                         </Toolbar>
                     </AppBar>
                     <Drawer
@@ -109,27 +127,40 @@ export default class HomePage extends Component {
                             </List>
                         </Box>
                     </Drawer>
-                    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <Box component="main" sx={{ flexGrow: 1, p: 3,justifyContent: 'center' }}>
                         <Toolbar />
                         <Container>
                             <Routes>
-                                <Route path="/" element={
-                                    <>
-                                        <Typography variant="h4" gutterBottom sx={{ flexGrow: 1, p: 3, textAlign: 'center' }}>
-                                            Welcome to the School Management System
-                                        </Typography>
-                                        <CardMedia
-                                            component="img"
-                                            height="300"
-                                            image={schoolImage}
-                                            alt="School Management System"
-                                        />
-                                        <p>This page is under construction...</p>
-                                    </>
+                            <Route path="/" element={
+                                <Box     sx={{ 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center', 
+                                    height: '70vh', 
+                                    textAlign: 'center',
+                                    p: 30
+                                  }}>
+                                    <Typography variant="h4" gutterBottom>
+                                    Welcome to the School Management System
+                                    </Typography>
+                                    <CardMedia
+                                    component="img"
+                                    height="300"
+                                    image={schoolImage}
+                                    alt="School Management System"
+                                    />
+                                    <Typography variant="body1" gutterBottom>
+                                    This page is under construction...
+                                    </Typography>
+                                </Box>
                                 } />
+
+
                                 <Route path="/students/add" element={<StudentDataEntryPage />} />
                                 <Route path="/faculty/add" element={<FacultyDataEntryPage />} />
                                 <Route path="/departments" element={<DepartmentDataEntryPage />} />
+                                <Route path="/login" element={<LoginPage />} />
                                 {/* Assume paths for other components like Events */}
                             </Routes>
                         </Container>
